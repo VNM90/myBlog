@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class='detail'>
+<span>{{ post.title }} </span> | <span> {{ post.author }} </span> | <span> {{ post.post_date }} </span> | <a href="{% url 'update' post.pk %}">Edit</a> | <a href="{% url 'delete' post.pk %}">Delete</a> | <a href="{% url 'home' %}">Go back</a>
+</div>
+<hr>
+<div class='post-detail'>{{ post.body|safe }}</div>
+
+<hr>
+<div class='comment'>
+<p>Comments...</p>
+{% if not post.comments.all %}
+    No comments yet...<a href="{% url 'add_comment' post.pk %}"> Add One</a>
+{% else %}
+<a href="{% url 'add_comment' post.pk %}">Add comment</a>
+<hr>
+    {% for comment in post.comments.all %}
+        {{ comment.author }} | {{comment.date_added }} <br>
+        {{ comment.body }}
+        <hr>
+    {% endfor %}
+{% endif %}
+</div>
+{% endblock %}
